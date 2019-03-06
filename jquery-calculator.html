@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery Calculator</title>
+
+    <!-- Added link to the jQuery Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Added a link to Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <!-- Added a link to our external stylesheet-->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<!-- Jumbotron for Title -->
+<div class="jumbotron">
+    <h1 class="text-center">jQuery Calculator</h1>
+    <h3 class="text-center">Perform basic mathematic operations using the power of jQuery!</h3>
+</div>
+
+<div class="container">
+
+    <div class="row">
+
+      <!-- Calculator Card -->
+      <div class="col-lg-4">
+        <div class="card">
+          <h3 class="card-header">Calculator</h3>
+
+          <div class="card-body">
+            <button id="button-1" class="btn btn-primary number" value="1"><span>1</span></button>
+            <button id="button-2" class="btn btn-primary number" value="2"><span>2</span></button>
+            <button id="button-3" class="btn btn-primary number" value="3"><span>3</span></button>
+            <button id="button-plus" class="btn btn-danger operator" value="plus"><span>+</span></button>
+            <br><br>
+            <button id="button-4" class="btn btn-primary number" value="4"><span>4</span></button>
+            <button id="button-5" class="btn btn-primary number" value="5"><span>5</span></button>
+            <button id="button-6" class="btn btn-primary number" value="6"><span>6</span></button>
+            <button id="button-minus" class="btn btn-danger operator" value="minus"><span>&minus;</span></button>
+            <br><br>
+            <button id="button-7" class="btn btn-primary number" value="7"><span>7</span></button>
+            <button id="button-8" class="btn btn-primary number" value="8"><span>8</span></button>
+            <button id="button-9" class="btn btn-primary number" value="9"><span>9</span></button>
+            <button id="button-multiply" class="btn btn-danger operator" value="times"><span>&times;</span></button>
+            <br><br>
+            <button id="button-0" class="btn btn-primary number" value="0"><span>0</span></button>
+            <button id="button-divide" class="btn btn-danger operator" value="divide"><span>&divide;</span></button>
+            <button id="button-power" class="btn btn-danger operator" value="power"><span>^</span></button>
+            <button id="button-equal" class="btn btn-success equal" value="equals"><span>=</span></button>
+            <br><br>
+            <button id="button-clear" class="btn btn-dark clear" value="clear"><span>clear</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result Card -->
+      <div class="col-lg-6">
+        <div class="card">
+          <h3 class="card-header">Result</h3>
+          <div class="card-body">
+            <h1 id="first-number"></h1>
+            <h1 id="operator"></h1>
+            <h1 id="second-number"></h1>
+            <hr>
+            <h1 id="result"></h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+/* 
+
+THIS WORKS, I just wanted to try without variables
+
+// Your code here...
+var first=0;
+var second=0;
+var op="none";
+var ans=false;
+
+//Primary numbers become first number until an opperator is clicked, then it becomes second
+$(".number").on("click",function(){
+  if(ans) clear();
+  if(op=="none"){
+    first=first*10+parseInt(this.value);
+    $("#first-number").append(this.value);
+  }
+  else{
+    second=second*10+parseInt(this.value);
+    $("#second-number").append(this.value);
+  }
+  
+})
+function clear(){
+  $("#first-number").empty();
+  $("#second-number").empty();
+  $("#operator").empty();
+  $("#result").empty();
+  first=0;
+  second=0;
+  op="none";
+  ans=false;
+}
+
+//any new operatiors overwrite the current one
+$(".operator").on("click",function(){
+  if (ans) return;
+  op=this.value;
+  $("#operator").text(this.textContent);
+});
+
+// enter solves the problem
+$(".equal").on("click",function(){
+  if(ans) return;
+
+  if(op=="none"){
+    $("#result").append(first);
+  }
+  else if(op=="plus"){
+    $("#result").append(first+second);
+  }
+  else if(op=="minus"){
+    $("#result").append(first-second);
+  }
+  else if(op=="times"){ 
+    $("#result").append(first*second);
+  }
+  else if(op=="divide"){
+    $("#result").append(first/second);
+  }
+  else if(op=="power"){
+    $("#result").append(Math.pow(first,second));
+  }
+  ans=true;
+});
+
+//clear
+$(".clear").on("click",clear);*/
+
+// Your code here...
+var first=$("#first-number");
+var second=$("#second-number");
+var op=$("#operator");
+var ans=$("#result");
+
+//Primary numbers become first number until an opperator is clicked, then it becomes second
+$(".number").on("click",function(){
+  if(ans.text()!="") clear();
+  if(op.text()==""){
+    first.append(this.value);
+  }
+  else{
+    $("#second-number").append(this.value);
+  }
+  
+})
+function clear(){
+  first.empty();
+  second.empty();
+  op.empty();
+  ans.empty();
+}
+
+//any new operatiors overwrite the current one
+$(".operator").on("click",function(){
+  if (ans.text()!="") {
+    first.empty();
+    first.text(ans.text());
+    ans.empty();
+    second.empty();
+  };
+  op.text(this.textContent);
+});
+
+// enter solves the problem
+$(".equal").on("click",function(){
+  if(ans.text()!="") {
+    first.empty();
+    first.text(ans.text());
+    ans.empty();
+  };
+  if(op.text()==""){
+    $("#result").append(first.text());
+  }
+  else if(op.text()=="+"){
+    $("#result").append(+first.text()+(+second.text()));
+  }
+  else if(op.text()=="−"){
+    $("#result").append(+first.text()-second.text());
+  }
+  else if(op.text()=="×"){ 
+    $("#result").append(+first.text()*+second.text());
+  }
+  else if(op.text()=="÷"){
+    $("#result").append(+first.text()/+second.text());
+  }
+  else if(op.text()=="^"){
+    $("#result").append(Math.pow(+first.text(),+second.text()));
+  }
+});
+
+//clear
+$(".clear").on("click",clear);
+
+})
+
+
+
+</script>
+
+</body>
+</html>
