@@ -177,6 +177,7 @@ $(".operator").on("click",function(){
     ans.empty();
     second.empty();
   };
+  if(first.text()==="") first.text("0");
   op.text(this.textContent);
 });
 
